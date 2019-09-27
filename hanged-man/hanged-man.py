@@ -11,6 +11,8 @@ vidas = 5
 find = False
 
 
+
+
 def elige_palabra():
     global palabra
     length = len(lista)
