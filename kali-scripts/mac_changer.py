@@ -17,9 +17,10 @@ import re
 # TODO:Meter también la opción de reiniciar
 
 def reset_mac(interface):
-    #Esto no está bien hecho, me pilla {print$3} como cadena de texto
-    subprocess.call(["sudo","ifconfig", interface, "hw", "ether", "$(ethtool -P eth0 | awk '{print $3})'"])
-
+    mac = subprocess.check_output(["sudo","ethtool","-P", interface]).decode("utf-8")
+    regex_mac_search_result = re.search(
+        r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", mac)
+    change_mac(interface,regex_mac_search_result.group(0))
 
 def get_arguments():  # Funcion para pillar los argumentos del script
     parser = optparse.OptionParser()
@@ -71,6 +72,7 @@ if options.reset:
     current_mac = get_current_mac(options.interface)
     print("The current MAC Address = " + str(current_mac))
     reset_mac(options.interface)
+    current_mac = get_current_mac(options.interface)
     print("[+] The MAC address successfully changed to " + current_mac)
 else:
     current_mac = get_current_mac(options.interface)
