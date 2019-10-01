@@ -14,8 +14,6 @@ import re
 # Si queremos reiniciar nuestra MAC usaremos este comandos
 #     sudo ifconfig eth0 hw ether $(ethtool -P eth0 | awk '{print $3}')
 
-# TODO:Meter también la opción de reiniciar
-
 def reset_mac(interface):
     mac = subprocess.check_output(["sudo","ethtool","-P", interface]).decode("utf-8")
     regex_mac_search_result = re.search(
