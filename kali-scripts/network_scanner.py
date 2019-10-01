@@ -18,11 +18,9 @@ import argparse
 
 def scan(ip):  # Función que dado una IP o un rango de IP escanea una subred
     # Creamos un objeto ARP con la dirección IP objetivo
-    #TODO: Me dice que no existe ARP en scapy
     arp_request = scapy.ARP(pdst=ip)
     # Lo vamos a enviar por broadcast, por eso ponemos como mac todo 1
     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
-    # TODO: Como se ha hecho este paquete???
     arp_request_broadcast = broadcast/arp_request
     # scapy.srp() envía el paquete arp_request_broadcast y mete en answered_list las respuestas
     # [0] permite listar solo las respuestas
